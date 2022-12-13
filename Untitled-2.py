@@ -3,6 +3,7 @@ class bintrees:
         self.data=data
         self.left=None
         self.right=None
+
 def call_the_tree(root):
     if root==None:
         return
@@ -14,12 +15,14 @@ def call_the_tree(root):
     print()
     call_the_tree(root.left)
     call_the_tree(root.right)
+
 def count_nodes(root):
     if root==None:
         return 0
     left_count=count_nodes(root.left)
     right_count=count_nodes(root.right)
     return 1+left_count+right_count
+
 def find_max(root):
     if root==None:
         return -1
@@ -27,6 +30,7 @@ def find_max(root):
     rightmax=find_max(root.right)
     returnmax=max(leftmax,rightmax,root.data)
     return returnmax
+
 def take_input():
     rootdata=int(input())
     if rootdata==-1:
@@ -35,7 +39,37 @@ def take_input():
     root.left=take_input()
     root.right=take_input()
     return root
+
+def count_leaf_nodes(root):
+    if root==None:
+        return 0
+    if root.left==None and root.right==None:
+        return 1
+    leftleaf=count_leaf_nodes(root.left)
+    rightleaf=count_leaf_nodes(root.right)
+    return leftleaf+rightleaf
+
+def print_nodes_v1(root,k):
+    if root==None:
+        return
+    if k==0:
+        print(root.data)
+        return
+    print_nodes_v1(root.left,k-1)
+    print_nodes_v1(root.right,k-1)
+
+def print_nodes_v2(root,k,d=0):
+    if root==None:
+        return
+    if k==d:
+        print(root.data)
+        return
+    print_nodes_v2(root.left,k,d+1)
+    print_nodes_v2(root.right,k,d+1)
+
 root=take_input()
 call_the_tree(root)
 print(count_nodes(root))
 print(find_max(root))
+print(count_leaf_nodes(root))
+(print_nodes_v2(root,2))
